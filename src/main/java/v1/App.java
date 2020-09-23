@@ -29,24 +29,47 @@ import java.util.List;
  * OpenIMAJ Hello world!
  */
 public class App {
+    
+    // Url para imagem do emoji que vai ser colocado na frente da face detectada
     private static final String URL = "https://cdn.shopify.com/s/files/1/1061/1924/products/Thinking_Face_Emoji_large.png?v=1571606036";
 
     public static void main(String[] args) throws VideoCaptureException {
+        
+        // Instancia uma tela de vídeo 
         Video<MBFImage> video = new VideoCapture(860, 640);
+        
+        // Cria tela de vídeo a partir da Web Cam do Usuário
         VideoDisplay<MBFImage> display = VideoDisplay.createVideoDisplay(video);
 
+        // Cria um listener que identifica frames nos vídeos e ativa processamento no frame
         display.addVideoListener(
                 new VideoDisplayListener<MBFImage>() {
+                    
+                    // Método para mudança e processamento de frame antes da atualização
                     public void beforeUpdate(MBFImage frame) {
+                        
+                        // Instancia o algorítmo HaarCascade para identificação de Face
                         FaceDetector<DetectedFace, FImage> fd = new HaarCascadeDetector(40);
+                       
+                        // Instancia lista para cada face detectada pela webcam
                         List<DetectedFace> faces = fd.detectFaces(Transforms.calculateIntensity(frame));
 
+                        // Para cada face detectada
                         for (DetectedFace face : faces) {
                             try {
+                                
+                                // Carrega imagem do Emoji
                                 MBFImage image = ImageUtilities.readMBF(new File("emoji.jpg"));
+                                
+                                // captura coordenada X do centro da face
                                 int x = Math.round(face.getBounds().x);
+                                
+                                // Captura coordenada y do ponto mais alto do centro da face (altura)
                                 int y = Math.round(face.getBounds().y);
+                                
+                                // Coloca imagem do emoji nas coordenadas caputuradas.
                                 frame.drawImage(image, x, y);
+                                
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
