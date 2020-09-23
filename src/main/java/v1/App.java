@@ -57,7 +57,6 @@ public class App {
                         // Para cada face detectada
                         for (DetectedFace face : faces) {
                             try {
-                                
                                 // Carrega imagem do Emoji
                                 MBFImage image = ImageUtilities.readMBF(new File("emoji.jpg"));
                                 
