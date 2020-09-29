@@ -164,6 +164,18 @@
           <downloadJavadocs>true</downloadJavadocs>
         </configuration>
       </plugin>
+       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.6.4</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>v1.App</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 </project>
